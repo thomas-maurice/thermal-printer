@@ -63,7 +63,7 @@ class PrintServicer(api_pb2_grpc.PrintServiceServicer):
         return empty_pb2.Empty()
 
 def serve():
-    server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
+    server = grpc.server(futures.ThreadPoolExecutor(max_workers=1))
     api_pb2_grpc.add_PrintServiceServicer_to_server(
         PrintServicer(), server)
     server.add_insecure_port('[::]:8069')
