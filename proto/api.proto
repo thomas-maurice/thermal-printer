@@ -1,0 +1,37 @@
+syntax = "proto3";
+
+package proto;
+
+option go_package = ".;proto";
+
+import "google/protobuf/empty.proto";
+
+service PrintService {
+    rpc Print(Line) returns (google.protobuf.Empty) {}
+    rpc Blank(BlankLines) returns(google.protobuf.Empty) {}
+    rpc QR(QRCode) returns(google.protobuf.Empty) {}
+    rpc Bar(Barcode) returns(google.protobuf.Empty) {}
+}
+
+message Line {
+    string line = 1;
+    int64 font = 2;
+}
+
+message BlankLines {
+    int32 number = 1;
+    // font should be 0 or 1, usually 0 is a bigger font
+    int64 font = 2;
+}
+
+message QRCode {
+    string code = 1;
+    int64 pixel_size = 2;
+    bool center = 3;
+}
+
+message Barcode {
+    string code = 1;
+    bool center = 2;
+    int32 blanks = 3;
+}
