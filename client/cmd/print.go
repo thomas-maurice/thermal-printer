@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"context"
+	"io/ioutil"
 
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
@@ -18,6 +19,7 @@ var (
 	addNewLine    bool
 	barcodeHeight int64
 	barcodeWidth  int64
+	fileData      string
 )
 
 var printCmd = &cobra.Command{
@@ -114,7 +116,7 @@ var printLineCmd = &cobra.Command{
 	Short: "Prints a line",
 	Long:  ``,
 	Run: func(cmd *cobra.Command, args []string) {
-		if len(args) != 1 {
+		if len(args) != 1 && fileData == "" {
 			logrus.Fatal("You should only pass the data to print")
 		}
 		c, err := getClient()
@@ -122,10 +124,21 @@ var printLineCmd = &cobra.Command{
 			logrus.WithError(err).Fatal("Could not get a client")
 		}
 
+		var printData string
+		if len(args) != 0 {
+			printData = args[0]
+		} else {
+			b, err := ioutil.ReadFile(fileData)
+			if err != nil {
+				logrus.WithError(err).Fatal("Could not read test to print from file")
+			}
+			printData = string(b)
+		}
+
 		data, err := c.Print(
 			context.Background(),
 			&proto.Line{
-				Line: args[0],
+				Line: printData,
 				Font: font,
 			},
 		)
@@ -158,8 +171,9 @@ func initPrintCmd() {
 	printBlankCmd.PersistentFlags().Int32VarP(&blankLines, "blank", "b", 1, "How many lines to output")
 	printBlankCmd.PersistentFlags().Int64VarP(&font, "font", "f", 1, "Font to use")
 
-	printLineCmd.PersistentFlags().Int64VarP(&font, "font", "f", 1, "Font to use")
+	printLineCmd.PersistentFlags().Int64VarP(&font, "font", "t", 1, "Font to use")
 	printLineCmd.PersistentFlags().BoolVarP(&addNewLine, "new-line", "n", true, "Wether or not add a new line")
+	printLineCmd.PersistentFlags().StringVarP(&fileData, "file", "f", "", "File containing data to print")
 
 	printBarcodeCmd.PersistentFlags().BoolVarP(&centerBarcode, "center", "", true, "Wether or not center the barcode")
 	printBarcodeCmd.PersistentFlags().Int32VarP(&blankLines, "blank", "b", 1, "How many lines to output")
