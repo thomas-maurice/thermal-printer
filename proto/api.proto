@@ -11,6 +11,7 @@ service PrintService {
     rpc Blank(BlankLines) returns(google.protobuf.Empty) {}
     rpc QR(QRCode) returns(google.protobuf.Empty) {}
     rpc Bar(Barcode) returns(google.protobuf.Empty) {}
+    rpc PrintImage(Image) returns(google.protobuf.Empty) {}
 }
 
 message Line {
@@ -34,4 +35,8 @@ message Barcode {
     string code = 1;
     bool center = 2;
     int32 blanks = 3;
+}
+
+message Image {
+    bytes image_data = 1;
 }

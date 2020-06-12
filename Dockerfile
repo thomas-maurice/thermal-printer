@@ -10,11 +10,18 @@ RUN apk update && \
         openssl-dev \
         python3-dev \
         protobuf \
-        protobuf-dev && \
-    pip3 install --upgrade \
+        protobuf-dev \
+        libusb-dev \
+        libusb \
+        jpeg-dev \
+        libpng-dev \
+        tiff \
+        tiff-dev
+RUN pip3 install --upgrade \
         pip \
-        setuptools && \
-    pip3 install -r /app/requirements.txt
+        setuptools \
+        wheel
+RUN pip3 install -r /app/requirements.txt
 
 WORKDIR /app/server
 ENTRYPOINT python3 main.py

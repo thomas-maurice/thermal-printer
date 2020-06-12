@@ -34,6 +34,11 @@ class PrintServiceStub(object):
                 request_serializer=api__pb2.Barcode.SerializeToString,
                 response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
                 )
+        self.PrintImage = channel.unary_unary(
+                '/proto.PrintService/PrintImage',
+                request_serializer=api__pb2.Image.SerializeToString,
+                response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+                )
 
 
 class PrintServiceServicer(object):
@@ -63,6 +68,12 @@ class PrintServiceServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def PrintImage(self, request, context):
+        """Missing associated documentation comment in .proto file"""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_PrintServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -84,6 +95,11 @@ def add_PrintServiceServicer_to_server(servicer, server):
             'Bar': grpc.unary_unary_rpc_method_handler(
                     servicer.Bar,
                     request_deserializer=api__pb2.Barcode.FromString,
+                    response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+            ),
+            'PrintImage': grpc.unary_unary_rpc_method_handler(
+                    servicer.PrintImage,
+                    request_deserializer=api__pb2.Image.FromString,
                     response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
             ),
     }
@@ -156,6 +172,22 @@ class PrintService(object):
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/proto.PrintService/Bar',
             api__pb2.Barcode.SerializeToString,
+            google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+            options, channel_credentials,
+            call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def PrintImage(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/proto.PrintService/PrintImage',
+            api__pb2.Image.SerializeToString,
             google_dot_protobuf_dot_empty__pb2.Empty.FromString,
             options, channel_credentials,
             call_credentials, compression, wait_for_ready, timeout, metadata)

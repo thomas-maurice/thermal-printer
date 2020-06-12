@@ -19,7 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='proto',
   syntax='proto3',
   serialized_options=b'Z\007.;proto',
-  serialized_pb=b'\n\tapi.proto\x12\x05proto\x1a\x1bgoogle/protobuf/empty.proto\"\"\n\x04Line\x12\x0c\n\x04line\x18\x01 \x01(\t\x12\x0c\n\x04\x66ont\x18\x02 \x01(\x03\"*\n\nBlankLines\x12\x0e\n\x06number\x18\x01 \x01(\x05\x12\x0c\n\x04\x66ont\x18\x02 \x01(\x03\":\n\x06QRCode\x12\x0c\n\x04\x63ode\x18\x01 \x01(\t\x12\x12\n\npixel_size\x18\x02 \x01(\x03\x12\x0e\n\x06\x63\x65nter\x18\x03 \x01(\x08\"7\n\x07\x42\x61rcode\x12\x0c\n\x04\x63ode\x18\x01 \x01(\t\x12\x0e\n\x06\x63\x65nter\x18\x02 \x01(\x08\x12\x0e\n\x06\x62lanks\x18\x03 \x01(\x05\x32\xd4\x01\n\x0cPrintService\x12.\n\x05Print\x12\x0b.proto.Line\x1a\x16.google.protobuf.Empty\"\x00\x12\x34\n\x05\x42lank\x12\x11.proto.BlankLines\x1a\x16.google.protobuf.Empty\"\x00\x12-\n\x02QR\x12\r.proto.QRCode\x1a\x16.google.protobuf.Empty\"\x00\x12/\n\x03\x42\x61r\x12\x0e.proto.Barcode\x1a\x16.google.protobuf.Empty\"\x00\x42\tZ\x07.;protob\x06proto3'
+  serialized_pb=b'\n\tapi.proto\x12\x05proto\x1a\x1bgoogle/protobuf/empty.proto\"\"\n\x04Line\x12\x0c\n\x04line\x18\x01 \x01(\t\x12\x0c\n\x04\x66ont\x18\x02 \x01(\x03\"*\n\nBlankLines\x12\x0e\n\x06number\x18\x01 \x01(\x05\x12\x0c\n\x04\x66ont\x18\x02 \x01(\x03\":\n\x06QRCode\x12\x0c\n\x04\x63ode\x18\x01 \x01(\t\x12\x12\n\npixel_size\x18\x02 \x01(\x03\x12\x0e\n\x06\x63\x65nter\x18\x03 \x01(\x08\"7\n\x07\x42\x61rcode\x12\x0c\n\x04\x63ode\x18\x01 \x01(\t\x12\x0e\n\x06\x63\x65nter\x18\x02 \x01(\x08\x12\x0e\n\x06\x62lanks\x18\x03 \x01(\x05\"\x1b\n\x05Image\x12\x12\n\nimage_data\x18\x01 \x01(\x0c\x32\x8a\x02\n\x0cPrintService\x12.\n\x05Print\x12\x0b.proto.Line\x1a\x16.google.protobuf.Empty\"\x00\x12\x34\n\x05\x42lank\x12\x11.proto.BlankLines\x1a\x16.google.protobuf.Empty\"\x00\x12-\n\x02QR\x12\r.proto.QRCode\x1a\x16.google.protobuf.Empty\"\x00\x12/\n\x03\x42\x61r\x12\x0e.proto.Barcode\x1a\x16.google.protobuf.Empty\"\x00\x12\x34\n\nPrintImage\x12\x0c.proto.Image\x1a\x16.google.protobuf.Empty\"\x00\x42\tZ\x07.;protob\x06proto3'
   ,
   dependencies=[google_dot_protobuf_dot_empty__pb2.DESCRIPTOR,])
 
@@ -191,10 +191,42 @@ _BARCODE = _descriptor.Descriptor(
   serialized_end=244,
 )
 
+
+_IMAGE = _descriptor.Descriptor(
+  name='Image',
+  full_name='proto.Image',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='image_data', full_name='proto.Image.image_data', index=0,
+      number=1, type=12, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"",
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=246,
+  serialized_end=273,
+)
+
 DESCRIPTOR.message_types_by_name['Line'] = _LINE
 DESCRIPTOR.message_types_by_name['BlankLines'] = _BLANKLINES
 DESCRIPTOR.message_types_by_name['QRCode'] = _QRCODE
 DESCRIPTOR.message_types_by_name['Barcode'] = _BARCODE
+DESCRIPTOR.message_types_by_name['Image'] = _IMAGE
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 Line = _reflection.GeneratedProtocolMessageType('Line', (_message.Message,), {
@@ -225,6 +257,13 @@ Barcode = _reflection.GeneratedProtocolMessageType('Barcode', (_message.Message,
   })
 _sym_db.RegisterMessage(Barcode)
 
+Image = _reflection.GeneratedProtocolMessageType('Image', (_message.Message,), {
+  'DESCRIPTOR' : _IMAGE,
+  '__module__' : 'api_pb2'
+  # @@protoc_insertion_point(class_scope:proto.Image)
+  })
+_sym_db.RegisterMessage(Image)
+
 
 DESCRIPTOR._options = None
 
@@ -234,8 +273,8 @@ _PRINTSERVICE = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=0,
   serialized_options=None,
-  serialized_start=247,
-  serialized_end=459,
+  serialized_start=276,
+  serialized_end=542,
   methods=[
   _descriptor.MethodDescriptor(
     name='Print',
@@ -270,6 +309,15 @@ _PRINTSERVICE = _descriptor.ServiceDescriptor(
     index=3,
     containing_service=None,
     input_type=_BARCODE,
+    output_type=google_dot_protobuf_dot_empty__pb2._EMPTY,
+    serialized_options=None,
+  ),
+  _descriptor.MethodDescriptor(
+    name='PrintImage',
+    full_name='proto.PrintService.PrintImage',
+    index=4,
+    containing_service=None,
+    input_type=_IMAGE,
     output_type=google_dot_protobuf_dot_empty__pb2._EMPTY,
     serialized_options=None,
   ),

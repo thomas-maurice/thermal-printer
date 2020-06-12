@@ -164,6 +164,37 @@ var printLineCmd = &cobra.Command{
 	},
 }
 
+var printImageCmd = &cobra.Command{
+	Use:   "image",
+	Short: "Prints an image",
+	Long:  ``,
+	Run: func(cmd *cobra.Command, args []string) {
+		if len(args) != 1 {
+			logrus.Fatal("You should only pass a file name")
+		}
+		c, err := getClient()
+		if err != nil {
+			logrus.WithError(err).Fatal("Could not get a client")
+		}
+
+		b, err := ioutil.ReadFile(args[0])
+		if err != nil {
+			logrus.WithError(err).Fatal("Could not read image data")
+		}
+
+		data, err := c.PrintImage(
+			context.Background(),
+			&proto.Image{
+				ImageData: b,
+			},
+		)
+		if err != nil {
+			logrus.WithError(err).Fatal("Call failed")
+		}
+		output(data)
+	},
+}
+
 func initPrintCmd() {
 	printQRCmd.PersistentFlags().BoolVarP(&centerQR, "center", "", true, "Wether or not center the QR code")
 	printQRCmd.PersistentFlags().Int64VarP(&pixelSize, "pixel-size", "p", 5, "Pixel size for the code")
@@ -182,4 +213,5 @@ func initPrintCmd() {
 	printCmd.AddCommand(printQRCmd)
 	printCmd.AddCommand(printBlankCmd)
 	printCmd.AddCommand(printBarcodeCmd)
+	printCmd.AddCommand(printImageCmd)
 }

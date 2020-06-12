@@ -3,6 +3,7 @@ import time
 import math
 import os
 import logging
+import tempfile
 import functools
 from escpos.printer import Usb
 from usb.core import USBError
@@ -60,6 +61,18 @@ class PrintServicer(api_pb2_grpc.PrintServiceServicer):
         for i in range(0, request.blanks):
             self.printer.text("\n")
 
+        return empty_pb2.Empty()
+    
+    @printer_guard
+    def PrintImage(self, request, context):
+        image = open("/tmp/print-image", "wb")
+        image.write(request.image_data)
+        image.flush()
+        os.system("convert /tmp/print-image -resize 384 /tmp/print-image-resized")
+        self.printer.image("/tmp/print-image-resized")
+        image.close()
+        os.remove("/tmp/print-image-resized")
+        os.remove("/tmp/print-image")
         return empty_pb2.Empty()
 
 def serve():
