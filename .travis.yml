@@ -1,0 +1,14 @@
+language: go
+
+services:
+  - docker
+
+before_install:
+  - docker build --no-cache -t mauricethomas/thermal-printer:${TRAVIS_COMMIT} .
+
+script:
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  - docker push mauricethomas/thermal-printer:${TRAVIS_COMMIT}
+  - docker tag mauricethomas/thermal-printer:${TRAVIS_COMMIT} mauricethomas/thermal-printer:latest
+  - docker push mauricethomas/thermal-printer:latest
+
