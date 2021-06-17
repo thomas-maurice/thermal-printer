@@ -70,7 +70,7 @@ class PrintServicer(api_pb2_grpc.PrintServiceServicer):
         image = open("/tmp/print-image", "wb")
         image.write(request.image_data)
         image.flush()
-        os.system("convert /tmp/print-image -resize 384 /tmp/print-image-resized")
+        os.system("convert /tmp/print-image -resize 380 /tmp/print-image-resized")
         self.printer.image("/tmp/print-image-resized")
         image.close()
         os.remove("/tmp/print-image-resized")
