@@ -6,6 +6,7 @@ RUN apk update && \
     apk add \
         alpine-sdk \
         python3 \
+        py3-pip \
         libffi-dev \
         openssl-dev \
         python3-dev \

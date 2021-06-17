@@ -2,7 +2,8 @@ syntax = "proto3";
 
 package proto;
 
-option go_package = ".;proto";
+//option go_package = "github.com/thomas-maurice/thermal-printer/go;proto";
+option go_package = "./go;proto";
 
 import "google/protobuf/empty.proto";
 
