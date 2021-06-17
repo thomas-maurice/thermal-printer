@@ -2,20 +2,20 @@ FROM alpine:latest
 
 COPY . /app
 
-RUN apk update && \
-    apk add \
+RUN apk add --update --no-cache \
         alpine-sdk \
-        python3 \
-        py3-pip \
+        imagemagick \
+        jpeg-dev \
         libffi-dev \
-        openssl-dev \
-        python3-dev \
-        protobuf \
-        protobuf-dev \
+        libpng-dev \
         libusb-dev \
         libusb \
-        jpeg-dev \
-        libpng-dev \
+        openssl-dev \
+        protobuf \
+        protobuf-dev \
+        python3 \
+        python3-dev \
+        py3-pip \
         tiff \
         tiff-dev
 RUN pip3 install --upgrade \
