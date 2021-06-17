@@ -7,6 +7,7 @@ import (
 	"io/ioutil"
 
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/backoff"
 	"google.golang.org/grpc/credentials"
 
 	proto "github.com/thomas-maurice/thermal-printer/go"
@@ -40,8 +41,6 @@ func GetTLSConfig(rootCA, clientCert, clientKey string, skipVerify bool) (*tls.C
 		config.Certificates = []tls.Certificate{cert}
 	}
 
-	config.BuildNameToCertificate()
-
 	return &config, nil
 }
 
@@ -58,7 +57,9 @@ func GetClient(addr string, useTLS bool, config *tls.Config) (proto.PrintService
 		conn, err = grpc.Dial(addr,
 			grpc.WithTransportCredentials(credentials.NewTLS(config)),
 			grpc.FailOnNonTempDialError(true),
-			grpc.WithBackoffConfig(grpc.DefaultBackoffConfig),
+			grpc.WithConnectParams(grpc.ConnectParams{
+				Backoff: backoff.DefaultConfig,
+			}),
 			grpc.WithBlock(),
 		)
 		if err != nil {

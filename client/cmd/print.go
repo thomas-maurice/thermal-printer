@@ -17,8 +17,6 @@ var (
 	blankLines    int32
 	font          int64
 	addNewLine    bool
-	barcodeHeight int64
-	barcodeWidth  int64
 	fileData      string
 )
 
