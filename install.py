@@ -55,11 +55,11 @@ with open(installDir + "/systemd/escpos-server.service.tpl", "r") as tmplFile:
     print(rendered)
     print("8<-" * 30)
     if args.installSystemd:
-        with open("/lib/systemd/system/escpos-server.service", "wb") as unitFile:
+        with open("/lib/systemd/system/escpos-server.service", "w") as unitFile:
             unitFile.write(rendered)
             logging.info("written unit file successfully")
 
 if args.installUdev:
-    with open("/etc/udev/rules.d/80-escpos-server-printer.rules", "wb") as unitFile:
+    with open("/etc/udev/rules.d/80-escpos-server-printer.rules", "w") as unitFile:
         unitFile.write("SUBSYSTEM==\"usb\", ATTR{idVendor}==\"0416\", ATTR{idProduct}==\"5011\", MODE=\"666\"\n")
         logging.info("written udev file successfully")
