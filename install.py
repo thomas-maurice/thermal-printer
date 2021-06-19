@@ -33,6 +33,18 @@ if process.returncode != 0:
     logging.error("failed to create the virtual env")
     sys.exit(process.returncode)
 
+process = subprocess.Popen(["{}/.venv/bin/pip3".format(installDir), "install", "wheel"], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+for c in iter(lambda: process.stdout.read(1), b''):
+    sys.stdout.buffer.write(c)
+
+process.wait()
+
+if process.returncode != 0:
+    logging.error("failed to install wheel")
+    sys.exit(process.returncode)
+
+sys.stdout.flush()
+
 process = subprocess.Popen(["{}/.venv/bin/pip3".format(installDir), "install", "-r", "{}/requirements.txt".format(installDir)], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 for c in iter(lambda: process.stdout.read(1), b''):
     sys.stdout.buffer.write(c)
