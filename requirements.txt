@@ -1,6 +1,6 @@
 appdirs==1.4.4
 argcomplete==1.12.3
-future==0.18.2
+future==0.18.3
 grpcio==1.38.0
 grpcio-tools==1.38.0
 importlib-metadata==4.5.0
